@@ -1,0 +1,18 @@
+<title>Logout - TIME TRACKER</title>
+<body>
+<div data-role="page" data-theme="a" id="pg_logout">
+
+Logging Out.. Please wait..
+<script type="text/javascript">
+	$(document).ready(function(){
+		eraseCookie('loggedin');
+		eraseCookie('tathmid');
+		eraseCookie('sessionid');
+		eraseCookie('presetthm');
+		//window.location.assign("index.html");
+		$.mobile.changePage( "index.html", { transition: "slideup"} );
+	});
+</script>
+
+</div>
+</body>

@@ -1,0 +1,96 @@
+<html>
+<head>
+	<title>Sign Up - Time Tracker</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<div data-role="page" data-theme="a" id="pg_signup">
+
+
+<div align="center">
+	<div id="msgdiv"></div>
+	<div class="heading1">Time Tracker - Sign Up</div><br>
+</div>
+	<div id="maincont">
+		<form name="signupform" method="post">
+			Preffered User Name: <input type="text" name="uname" id="unm" required="required">
+			<div id="availunm"></div>
+			<br>
+			Preferred Password: <input type="password" name="upass" required="required">
+			<br>
+			Re-Enter Password: <input type="password" name="upass1" required="required">
+			<br>
+			E-Mail: <input type="email" name="uemail" required="required">
+			<br>
+			Subscribe to our Newsletters/E-mails 
+			<input type="checkbox" name="usubscribe" id="subscribe">
+			<br>
+			I accept all the terms & conditions laid down by the developers.
+			<input type="checkbox" name="aggaccept" id="aggaccept">
+			<div align="center"><input type="button" value=" Sign Up " id="sbtn1"></div>
+			<a href="index.html" data-role="button">Go Back</a>
+			<font size="7">Please visit www.techahoy.com/tmetracker/privacy to know the terms & privacy details related to this software.
+			</font>
+		</form>
+	</div>
+	<div style="clear:both;">
+	<div class="selbtn" id="aexit" style="width:150px;margin:auto;text-align:center;">Exit</div>
+	<br>
+	</div>
+	
+	
+	<script type="text/javascript">
+		var status=readCookie('loggedin');
+		if(!status)
+		{
+			alert("Please Logout First to Sign Up for a new account!");
+			//window.location.assign("logout.html");
+			$.mobile.changePage( "logout.html", { transition: "slideup"} );
+		}
+		
+		$("#sbtn1").click(function(){
+			var uname=document.signupform.uname.value;
+			var upass=document.signupform.upass.value;
+			var upass1=document.signupform.upass1.value;
+			var uemail=document.signupform.uemail.value;
+			var usubscribe=$('#subscribe').is(':checked');
+			var aggaccept=$('#aggaccept').is(':checked');
+			var uid=Math.floor((Math.random()*100000)+1);
+			var regtime = new Date();
+			var loginid=Math.floor((Math.random()*100000)+1);
+			
+			if(upass!=upass1)
+			{
+				alert("OOPS! The passwords you entered do not match");return;
+			}
+			if(uemail=="")
+			{
+				alert("Please Enter a Valid E-mail Address");return;
+			}
+			if(uname=="")
+			{
+				alert("Please Enter a Valid User Name");return;
+			}
+			if(!aggaccept)
+			{
+				alert("You must accept the agreement in order to continue sign up");return;
+			}
+			
+			dbquery="SELECT * FROM USERDB WHERE uname='"+uname+"'";
+			window.errs=0;
+			selectquery(dbquery,dbobj,function(tx,results){var len = results.rows.length;if(len!=0){alert("Sorry! The user name you chose already exists! Please choose a different username!");window.errs=1;}},function(err){alert("OOPS! There was an error in creating the Tables for the Database! CODE:"+err.code);});
+			if(window.errs!=1)
+			{
+				dbquery="INSERT INTO USERDB (uname,upass,uid,createtime,email,aggaccept,subscribe,loginid) VALUES ('"+uname+"','"+upass+"','"+uid+"','"+regtime+"','"+uemail+"','"+aggaccept+"','"+usubscribe+"','"+loginid+"')";
+				sqlquery(dbquery,dbobj,function(){alert("Account Created Successfully!");navpage("index.html");},function(){alert("OOPS! There was an error in creating your account!");window.errs=1;});
+			}
+		});
+</script>
+	
+	<script type="text/javascript" src="js/evtlisteners.js"></script>
+	
+	</div>
+	
+</body>
+</html>

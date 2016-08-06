@@ -1,0 +1,74 @@
+<html>
+<head>
+	<title>Reports - Time Tracker</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div data-role="page" data-theme="a" id="pg_reportgen">
+
+<div align="center">
+	<div id="msgdivfinalrep"></div>
+	<div class="heading1">Final Reports - Time Tracker</div><br>
+	<div id="maincontrep">
+		Please Wait.. Generating reports..
+	</div>
+</div>
+
+<script type="text/javascript">
+var sid=getsession();
+var	uname=checkuname();
+var	tid=gettheme();
+var gscale=window.innerWidth-50;
+var query1;
+window.cevtarr=new Array();
+window.evtarr=new Array();
+window.keyarr=new Array();
+window.cevtco=0;
+window.evtco=0;
+if(typeof window.scales==="undefined")
+{
+	window.scales=250;
+}
+//mysql_query("SELECT * FROM startstopdb WHERE thmid='$tid' AND sid='$sid' AND uname='$uname' ORDER BY sno DESC LIMIT 0,2")
+getalldbdetails();
+//query1="SELECT * FROM STARTSTOPDB WHERE thmid='"+tid+"' AND sid='"+sid+"' AND uname='"+uname+"' LIMIT 0,2";
+//selectquery(query1,dbobj,finalrepstartstop,function(){alert("OOPS! An error occured in accessing the database!");});
+</script>
+
+</div>
+</html>
+<script type="text/javascript">
+/*$("#maincont").load("http://www.techahoy.com/tempdir/timetracker/finalreports.php?sessid="+sid+"&uname="+uname+"&tid="+tid+"&scales="+gscale,function(){
+		$("#msgdiv").html("<font color='green'>Report generation complete..</font>");
+		$("#maincont").prepend('<form name="rescaleform" style="position:relative;top:120px;z-index:2;"><input type="text" style="width:70px;" name="rescale"> <input type="button" value="Rescale" id="rescalebtn">'+
+		'<br> E-mail: <input type="text" name="usremail"> <input type="button" value="Send Report via E-mail" id="repmail"></form>');
+		clickactive();
+});
+
+function clickactive()
+{
+
+	$("#rescalebtn").click(function(){
+			gscale=document.rescaleform.rescale.value;
+			$("#maincont").load("http://www.techahoy.com/tempdir/timetracker/finalreports.php?sessid="+sid+"&uname="+uname+"&tid="+tid+"&scales="+gscale,function(){
+			$("#msgdiv").html("<font color='green'>Report generation complete..</font>");
+		$("#maincont").prepend('<form name="rescaleform" style="position:relative;top:120px;z-index:2;"><input type="text" style="width:70px;" name="rescale"> <input type="button" value="Rescale" id="rescalebtn">'+
+		'<br> E-mail: <input type="text" name="usremail"> <input type="button" value="Send Report via E-mail" id="repmail"></form>');
+			clickactive();
+		});
+		});
+		
+		$("#repmail").click(function(){
+			$("#msgdiv").html("");
+			$("#msgdiv").html("Please Wait.. Sending Email.. Make sure your internet connection is on!");
+			var repemail=document.rescaleform.usremail.value;
+			var reportcontent=$("#maincont").html();
+			$.post("http://www.techahoy.com/tempdir/timetracker/exportreports.php", { sessid:sid, uname:uname,tid:tid,scales:gscale,usremail:repemail,reporthtml:reportcontent })
+			.done(function(data) {
+				$("#msgdiv").html(data);
+				clickactive();
+			});
+		});
+
+}*/
+</script>

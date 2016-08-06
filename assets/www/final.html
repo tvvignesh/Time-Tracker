@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>Event Logging - Time Tracker</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!--<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes">-->
+</head>
+<body>
+<div data-role="page" data-theme="a" id="pg_evtlogging">
+
+<div align="center">
+	<div id="msgdivfinal"></div>
+	<div class="heading1">Event Logging - Time Tracker</div><br>
+	<div id="maincontfinal">
+	Please Wait.. Loading Events & Interventions..
+	</div>
+	<div style="clear:both;"> </div>
+	<div id="timer" style="font-size:20px;"></div>
+		<div class="selbtn" id="logstart" style="width:150px;margin:auto;">Start Event Logging</div>
+		<br>
+		<div class="selbtn" id="alogout" style="width:150px;margin:auto;">Logout</div>
+		<br>
+</div>
+
+<script type="text/javascript">
+window.evloop=0;
+var tid,sid,uname,eidp,gclass,cevt,appendtext,rflag,cureid,curename,dbquery5,gpclass,cevt;
+appendtext='';
+window.c=0;
+window.pressedbtns=new Array();
+window.pressindex=-1;
+sid=getsession();
+uname=checkuname();
+tid=gettheme();
+dbquery="SELECT * FROM EVTDB WHERE thmid='"+tid+"' AND uname='"+uname+"' AND sessionid='"+sid+"'";
+selectquery(dbquery,dbobj,finalevts,function(){alert("Error in accessing the database!");return;});
+</script>
+
+<script type="text/javascript" src="js/evtlisteners.js"></script>
+
+</div>
+</body>
+
+</html>

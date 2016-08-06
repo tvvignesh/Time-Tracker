@@ -1,0 +1,74 @@
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script src="cordova-2.2.0.js"></script>
+<html>
+<head>
+	<title>Time Tracker</title>
+	<link rel="stylesheet" href="style.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<div id="ldng">Loading</div>
+</head>
+<body>
+<div align="center">
+	<div id="msgdiv"></div>
+	<div class="heading1">Time Tracker</div><br>
+	<div class="heading1">Mutually Exclusive Events</div><br>
+	<div id="maincont">
+		<div id="subcont"></div>
+		<div id="addmutevt" class="selbtn">Select a pair of Mutually Exclusive Event</div>
+		<div id="mutproceed" class="selbtn">Proceed</div>
+	</div>
+	<div style="clear:both;">
+	<div class="selbtn" id="alogout" style="width:150px;margin:auto;">Logout</div>
+	<br>
+	</div>
+</body>
+<script type="text/javascript" src="js/mainscript.js"></script>
+<script type="text/javascript">
+		$(document).ready(function(){
+			var tid=gettheme();
+			var uname=checkuname();
+			var sessionid=getsession();
+			var preset="";
+			if(getpreset()==1)
+			{
+				preset="&preset=1";
+			}
+			$("#addmutevt").click(function(){
+				
+				$("#subcont").load("http://www.techahoy.com/tempdir/timetracker/mutevtlist.php?tid="+tid+"&uname="+uname+"&sid="+sessionid+preset,function(response, status, xhr) {
+							  if (status == "error") 
+								{
+									var msg = "OOPS! Error Creating Event : ";
+									$("#msgdiv").html(msg + xhr.status + " " + xhr.statusText);
+									return;
+								}
+								
+								$(".mutcontbtn").click(function(){
+									var e1=$(this).closest('form').find("select[name='mut1']").val();
+									var e2=$(this).closest('form').find("select[name='mut2']").val();
+									$("#msgdiv").load("http://www.techahoy.com/tempdir/timetracker/mutevtdefined.php?uname="+uname+"&tid="+tid+"&sid="+sessionid+"&e1="+e1+"&e2="+e2,function(response1, status1, xhr1) {
+								  if (status1 == "error") 
+									{
+										var msg1 = "OOPS! Error Uploading Event Details: ";
+										$("#msgdiv").html(msg1 + xhr1.status + " " + xhr1.statusText);
+										return;
+									}
+									else
+									{
+										$("#subcont").html("");
+									}
+									
+								});
+							});
+		});
+				
+			});
+			
+			$("#mutproceed").click(function(){
+				window.location.assign("final.html");
+			});
+		});
+</script>
+
+</html>

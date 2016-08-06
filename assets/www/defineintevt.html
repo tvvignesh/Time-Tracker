@@ -1,0 +1,69 @@
+<html>
+<head>
+	<title>Interventions - Time Tracker</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div data-role="page" data-theme="a" id="pg_intevents">
+
+<div align="center">
+	<div id="msgdiv"></div>
+	<div class="heading1">Time Tracker</div><br>
+	<div class="heading1">Interventions</div><br>
+	<div id="mainconts1" align="left">
+		Please Wait.. Loading Data..
+	</div>
+	<div style="clear:both;">
+	<div class="selbtn" id="alogout" style="width:150px;margin:auto;">Logout</div>
+	<br>
+	</div>
+</div>
+
+<script type="text/javascript">
+var tid=gettheme();
+var uname=checkuname();
+var sessionid=getsession();
+
+dbquery="SELECT * FROM EVTDB WHERE sessionid='"+sessionid+"' AND thmid='"+tid+"' AND uname='"+uname+"'";
+	selectquery(dbquery,dbobj,function(tx,results){
+		if(results.rows.length==0)
+		{
+			alert("Sorry! There are no Events to show!");navpage('index.html');return;
+		}
+		else
+		{
+			$("#mainconts1").html("Please Check All the Interventions from the list below:<br><br><form name='contlist' id='contlist'><div id='contacts'>");
+			for(var i=0;i<results.rows.length;i++)
+			{
+				$("#mainconts1").append('<input type="checkbox" name="cevtlist[]" value="'+results.rows.item(i).eid+'"> '+results.rows.item(i).evname+'<br><br>');
+			}
+			$("#mainconts1").append("<br><br></div><div align='center'><input type='button' name='scontbtn' id='scontbtn1' value=' Proceed '></div></form>");
+			
+			$("#scontbtn1").click(function(){
+				var contacts=$("input:checked");
+				//var contactArray = inputsToArray(contacts.children);
+				//var data = serializeArray(contactArray, 'cevts[]');
+				var eid;
+				var crtime = new Date();
+				var gpid;
+				var dbquery1;
+				contacts.each(function(index){
+						eid=$(this).val();
+						gpid=Math.floor((Math.random()*1000000)+1);
+						dbquery1="INSERT INTO INTERVENTIONDB (ieid,gpid,uname,thmid) VALUES ('"+eid+"','"+gpid+"','"+uname+"','"+tid+"')";
+						sqlquery(dbquery1,dbobj,function(){},function(){});
+					});
+				navpage('definesimevt.html');
+			
+		});
+			
+		}
+		
+	},function(){alert("Error in accessing the database!");return;});
+</script>
+<script type="text/javascript" src="js/evtlisteners.js"></script>
+
+</div>
+</body>
+
+</html>

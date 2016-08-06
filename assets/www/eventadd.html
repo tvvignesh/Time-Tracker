@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title>Add Events - Time Tracker</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<div data-role="page" data-theme="a" id="pg_eventadd">
+
+<div align="center">
+	<div id="msgdiv"></div>
+	<div class="heading1">Main Menu - Time Tracker</div><br>
+	<div id="maincont">
+		
+		<div class="ui-grid-a">
+			<div class="ui-block-a"><div id="newthm" class="selbtn">Create a New Theme</div></div>
+			<div class="ui-block-b"><div id="modthm" class="selbtn">Modify Themes</div></div>
+			<div class="ui-block-a"><div id="prethm" class="selbtn">Preset Themes</div></div>
+			<div class="ui-block-b"><div id="delthm" class="selbtn">Delete Themes</div></div>
+			<div class="ui-block-a"><div id="help" class="selbtn">Help</div></div>
+			<div class="ui-block-b"><div id="pubthm" class="selbtn">Public Themes</div></div>
+		</div>
+		
+	</div>
+	<br>
+	<div class="selbtn" id="alogout" style="width:150px;margin:auto;">Logout</div>
+	<br>
+</div>
+	
+<script type="text/javascript">
+	eraseCookie('presetthm');
+	eraseCookie('tathmid');
+</script>
+
+<script type="text/javascript" src="js/evtlisteners.js"></script>
+
+</div>
+	
+</body>
+
+</html>

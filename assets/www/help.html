@@ -1,0 +1,40 @@
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script src="cordova-2.2.0.js"></script>
+<html>
+<head>
+	<title>Time Tracker</title>
+	<link rel="stylesheet" href="style.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<div id="ldng">Loading</div>
+</head>
+<body>
+<div align="center">
+	<div id="msgdiv"></div>
+	<div class="heading1">Time Tracker</div><br>
+	<div class="heading1">Help</div><br>
+	<div id="maincont" align="left">
+		Please Wait.. Loading Help Contents.. Ensure that you are connected to internet..
+	</div>
+	<div style="clear:both;">
+	<div class="selbtn" id="alogout" style="width:150px;margin:auto;">Logout</div>
+	<br>
+	</div>
+</body>
+<script type="text/javascript" src="js/mainscript.js"></script>
+<script type="text/javascript">
+		$(document).ready(function(){
+			
+			$("#maincont").load("http://www.techahoy.com/tempdir/timetracker/helplist.php",function(response, status, xhr) {
+							  if (status == "error") 
+								{
+									var msg = "OOPS! Error Loading Help Contents: ";
+									$("#msgdiv").html(msg + xhr.status + " " + xhr.statusText);
+									return;
+								}
+									
+								});
+							});
+</script>
+
+</html>

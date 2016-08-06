@@ -1,0 +1,76 @@
+<script src="js/jquery.js"></script>
+<script src="cordova-2.2.0.js"></script>
+<script type="text/javascript" src="js/mainscript.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<html>
+<head>
+	<title>Time Tracker</title>
+	<link rel="stylesheet" href="style.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<div id="ldng">Loading</div>
+</head>
+<body>
+<div align="center">
+	<div id="msgdiv"></div>
+	<div class="heading1">Public Themes - Time Tracker</div><br>
+	<div id="maincont">
+		<div id="leftcont">
+			
+		</div>
+		<div id="rightcont">
+			
+		</div>
+	</div>
+	<div style="clear:both;">
+	<div class="selbtn" id="anextsetpub" style="width:150px;margin:auto;">Next --></div>
+	<div class="selbtn" id="aprevsetpub" style="width:150px;margin:auto;"><-- Previous</div>
+	<br>
+	<div class="selbtn" id="alogout" style="width:150px;margin:auto;">Logout</div>
+	<br>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
+}
+window.pagenextpub=0;
+		$(document).ready(function(){
+			var login=checklogin();
+			if(login!=1)
+			{
+				window.location.assign("index.html");
+			}
+			$("#maincont").load("http://www.techahoy.com/tempdir/timetracker/publicthemes.php?page=0",function(){
+				$(".themebtn").click(function(){
+					var tid=$(this).attr("id");
+					
+					var uname=checkuname();
+					
+					var randid= randomString(25, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_#');
+					//ALL EVENTS ARE DUPLICATED. ONLY UNAME IS DIFFERENT
+					$("#maincont").load("http://www.techahoy.com/tempdir/timetracker/publicthemeadd.php?uname="+uname+"&tid="+tid+"&sessid="+randid,function(){
+						
+						$.cookie('tathmid', tid, { expires: 1, path: '/' });
+						$.cookie('sessionid', randid, { expires: 1, path: '/' });	
+						window.location.assign('final.html');
+					});
+				});
+				
+				$("#anextsetpub").click(function(){
+					window.pagenextpub++;
+					$("#maincont").load("http://www.techahoy.com/tempdir/timetracker/publicthemes.php?page="+window.pagenextpub);
+				});
+				
+				$("#aprevsetpub").click(function(){
+					if(window.pagenextpub==0){alert("You cannot go any more previous!");return;}
+					window.pagenextpub--;
+					$("#maincont").load("http://www.techahoy.com/tempdir/timetracker/publicthemes.php?page="+window.pagenextpub);
+				});
+		});
+		});
+</script>
+
+</html>

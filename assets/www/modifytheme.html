@@ -1,0 +1,98 @@
+<html>
+<head>
+	<title>Modify Theme - Time Tracker</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div data-role="page" data-theme="a" id="pg_modifytheme">
+
+<div align="center">
+	<div id="msgdivmod"></div>
+	<div class="heading1">Modify Themes - Time Tracker</div><br>
+	Please select the theme you want to modify.
+	<div id="maincontmod">
+		<div id="leftcont">
+			
+		</div>
+		<div id="rightcont">
+			
+		</div>
+	</div>
+	<div style="clear:both;">
+	<div class="selbtn" id="alogout" style="width:150px;margin:auto;">Logout</div>
+	<br>
+	</div>
+</div>
+
+</div>
+</body>
+<script type="text/javascript">
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
+}
+	var uname=checkuname();
+	//"SELECT * FROM themedb WHERE uname='$uname' AND presetthm<>'1'"		
+	dbquery="SELECT * FROM THEMEDB WHERE uname='"+checkuname()+"' AND presetthm!='1'";
+	var co=0;
+	selectquery(dbquery,dbobj,function(tx,results){
+		$("#maincontmod").append();
+		if(results.rows.length==0)
+		{
+			$("#maincontmod").html("Sorry! There are no themes to modify currently");return;
+		}
+		var tid,tname
+		for(var i=0;i<results.rows.length;i++)
+		{
+			tid=results.rows.item(i).themeid;
+			tname=results.rows.item(i).themename;
+				if(co%2==0)
+				{$("#maincontmod").append('<div class="selbtn themebtn" id="'+tid+'" style="float:left;">'+tname+'</div>');}
+				else
+				{$("#maincontmod").append('<div class="selbtn themebtn" id="'+tid+'" style="float:right;">'+tname+'</div> <div style="clear:both;"> </div>');}
+			co++;
+		}
+		
+		$(".themebtn").click(function(){
+			var tid=$(this).attr("id");
+			var newthmname;
+			
+			$("#maincontmod").html('<div class="selbtn themebtn renamethm" id="'+tid+'" style="float:left;">Rename this Theme</div>');
+			$("#maincontmod").append('<div class="selbtn themebtn privsettings" id="'+tid+'" style="float:right;">Make theme Public</div>');
+			$("#maincontmod").append('<div class="selbtn themebtn privsettings1" id="'+tid+'" style="float:right;">Back to All themes</div>');
+			$("#maincontmod").append('<div class="selbtn themebtn backmod" style="float:right;">Back to </div>');
+			$("#maincontmod").append('<div style="clear:both;"> </div>');
+			$(".renamethm").click(function(){
+				if(newthmname=prompt("Please Enter the new theme Name"))
+				{
+					var dbquery4="UPDATE THEMEDB SET themename='"+newthmname+"' WHERE themeid='"+tid+"' AND uname='"+checkuname()+"'";
+					var randval=(Math.random()*10000)+1;
+					sqlquery(dbquery4,dbobj,function(){
+						$("#msgdivmod").html("Theme Name Updated Successfully!");navpage("modifytheme.html?a="+randval);
+					},function(){alert("OOPS! There was an error in updating theme Name!");});
+				}
+			});
+			
+			$(".privsettings").click(function(){
+				var dbquery4="UPDATE THEMEDB SET publicthm='2' WHERE themeid='"+tid+"' AND publicthm='1' AND uname='"+checkuname()+"'";
+					var randval=(Math.random()*10000)+1;
+					sqlquery(dbquery4,dbobj,function(){
+						$("#msgdivmod").html("Theme Name Updated Successfully!");navpage("modifytheme.html?a="+randval);
+					},function(){alert("OOPS! There was an error in updating theme Name!");});
+			});			
+			
+			$(".privsettings1").click(function(){
+				var dbquery4="UPDATE THEMEDB SET publicthm='1' WHERE themeid='"+tid+"' AND publicthm='2' AND uname='"+checkuname()+"'";
+					var randval=(Math.random()*10000)+1;
+					sqlquery(dbquery4,dbobj,function(){
+						$("#msgdivmod").html("Theme Name Updated Successfully!");navpage("modifytheme.html?a="+randval);
+					},function(){alert("OOPS! There was an error in updating theme Name!");});
+			});	
+			
+		});
+		
+	},function(){alert("Error in accessing the database!");return;});
+</script>
+
+</html>

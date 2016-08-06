@@ -1,0 +1,19 @@
+$(document).ready(function(){
+	allevtfunc($("#newthm"),"click",newthemefunc);
+	allevtfunc($('.selbtn'),"touchstart",function(){$(this).css("background-color","blue");});
+	allevtfunc($('.selbtn'),"touchend",function(){$(this).css("background-color","");});
+	//allevtfunc($("#contevt"),"click",function(){$("#msgdiv").load(weburl+"/addcontevt.php?thmid="+thmid);});
+	allevtfunc($("#alogout"),"click",function(){navpage("logout.html");});
+	allevtfunc($("#aexit"),"click",function(){navigator.app.exitApp();});
+	allevtfunc($("#prethm"),"click",function(){navpage("presetevent.html");});
+	allevtfunc($("#pubthm"),"click",function(){navpage("publicthemes.html");});
+	allevtfunc($("#delthm"),"click",function(){navpage("deletethemes.html");});
+	allevtfunc($("#help"),"click",function(){navpage("help.html");});
+	allevtfunc($("#modthm"),"click",function(){navpage("modifytheme.html");});
+	allevtfunc($("#addevt"),"click",addneweventfunc);
+	allevtfunc($("#finishadd"),"click",function(){if(confirm("Are you sure you want to finish adding all the events?")){navpage("definecont.html");}else{return;}});
+	allevtfunc($("#signupbtn"),"click",function(){navpage("signup.html");});
+	allevtfunc($("#simproceed"),"click",function(){navpage("definesimint.html");});
+	allevtfunc($("#simproceed1"),"click",function(){navpage("final.html");});
+	allevtfunc($("#logstart"),"click",logstarted);
+});
